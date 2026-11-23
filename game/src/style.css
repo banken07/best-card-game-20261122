@@ -45,6 +45,16 @@ h1.title { font-size: 84px; letter-spacing: 10px; color: #ffe27a;
 .suit-key { display: flex; gap: 22px; justify-content: center; margin-bottom: 26px; font-size: 16px; }
 .suit-key span { display: flex; align-items: center; gap: 7px; }
 
+/* ---------- suit icons (inline SVG, crisp at any size) ---------- */
+.suit-icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.12em;
+  fill: currentColor; }
+.suit-key .suit-icon { width: 18px; height: 18px; }
+.opp-tag .fav .suit-icon { width: 16px; height: 16px; }
+.card .corner .s .suit-icon { width: 15px; height: 15px; }
+.card .center .glyph .suit-icon { width: 42px; height: 42px; }
+.card.back .back-mark .suit-icon { width: 40px; height: 40px; }
+.fireworks .suit-icon { width: 42px; height: 42px; }
+
 /* ---------- play table ---------- */
 #screen-play { padding: 10px 22px 12px; }
 .topbar { display: flex; align-items: center; justify-content: space-between; }
@@ -78,9 +88,25 @@ h1.title { font-size: 84px; letter-spacing: 10px; color: #ffe27a;
 @keyframes pop { 0% { transform: scale(.4); opacity: 0; } 70% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
 .table-slot { text-align: center; }
 .table-slot .slot-label { font-size: 14px; letter-spacing: 2px; color: #cfc4f5; margin-bottom: 6px; }
-.table-slot .slot-empty { width: 110px; height: 154px; border: 2px dashed rgba(244,234,210,.4);
+.table-slot .slot-empty { width: 120px; height: 168px; border: 2px dashed rgba(244,234,210,.4);
   border-radius: 12px; display: flex; align-items: center; justify-content: center;
   font-size: 14px; color: rgba(244,234,210,.5); }
+/* The two played cards are LARGE, with a VS medallion between them. */
+.table-vs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 50% 35%, #ffe27a, #f5b301);
+  color: #241a00; font-size: 20px; font-weight: bold; letter-spacing: 1px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff2c0; box-shadow: 0 0 22px rgba(245,179,1,.75); z-index: 2; }
+.table-slot .card { width: 120px; height: 168px; }
+.table-slot .card .center .big { font-size: 56px; }
+.table-slot .card .center .glyph .suit-icon { width: 52px; height: 52px; }
+.table-slot .card.winner { border-color: #f5b301;
+  box-shadow: 0 0 0 3px #f5b301, 0 0 30px 8px rgba(245,179,1,.75); }
+.card .score-badge { position: absolute; top: -14px; right: -14px; z-index: 3;
+  min-width: 46px; height: 46px; padding: 0 6px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #ffe27a, #f5b301); color: #241a00;
+  font-size: 20px; font-weight: bold; display: flex; align-items: center; justify-content: center;
+  border: 2px solid #fff2c0; box-shadow: 0 0 16px rgba(245,179,1,.9); }
 .player-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
 .player-tag { width: 210px; }
 .player-tag .name { font-size: 20px; font-weight: bold; color: #ffe27a; }
@@ -120,12 +146,24 @@ h1.title { font-size: 84px; letter-spacing: 10px; color: #ffe27a;
 
 /* ---------- end screens ---------- */
 #screen-end { align-items: center; justify-content: center; text-align: center; }
+.win-burst { display: none; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 50% 44%, rgba(245,179,1,.38) 0%, rgba(245,179,1,.12) 32%, transparent 58%);
+  animation: burstglow 2.4s ease-in-out infinite; }
+@keyframes burstglow { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+.win-mode .win-burst { display: block; }
+.end-lanterns { display: none; gap: 26px; margin-bottom: 16px; }
+.win-mode .end-lanterns { display: flex; }
+.loss-mode .end-lanterns { display: flex; opacity: .28; filter: grayscale(.7); }
+.loss-mode .end-lanterns .lantern { box-shadow: none; animation: none; }
+.loss-mode { background: radial-gradient(ellipse at 50% 40%, rgba(122,95,208,.25), transparent 62%); }
 #end-title { font-size: 72px; letter-spacing: 6px; }
 #end-title.win { color: #ffe27a; text-shadow: 0 0 30px rgba(245,179,1,.8), 0 4px 0 #7a5c00; }
 #end-title.loss { color: #b9a8e8; text-shadow: 0 0 26px rgba(122,95,208,.7); }
 #end-sub { font-size: 24px; color: #cfc4f5; margin: 10px 0 6px; }
 #end-score { font-size: 30px; margin-bottom: 8px; }
+.win-mode #end-score { font-size: 42px; }
 #end-score b { color: #ffe27a; }
+.loss-mode #end-score b { color: #b9a8e8; }
 #end-detail { font-size: 17px; color: #cfc4f5; max-width: 640px; line-height: 1.6; margin-bottom: 28px; }
 .fireworks { display: flex; gap: 30px; margin-bottom: 14px; font-size: 40px; }
 .fireworks span { animation: burst 1.1s ease-in-out infinite; display: inline-block; }

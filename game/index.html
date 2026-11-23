@@ -9,6 +9,31 @@
 </head>
 <body>
 <div id="app">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="icon-sun" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="6.5" fill="currentColor" />
+        <g stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+          <line x1="16" y1="2.5" x2="16" y2="6.5" /><line x1="16" y1="25.5" x2="16" y2="29.5" />
+          <line x1="2.5" y1="16" x2="6.5" y2="16" /><line x1="25.5" y1="16" x2="29.5" y2="16" />
+          <line x1="6.1" y1="6.1" x2="8.9" y2="8.9" /><line x1="23.1" y1="8.9" x2="25.9" y2="6.1" />
+          <line x1="6.1" y1="25.9" x2="8.9" y2="23.1" /><line x1="23.1" y1="23.1" x2="25.9" y2="25.9" />
+        </g>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 32 32">
+        <path d="M22.5 3.5 A12.5 12.5 0 1 0 22.5 28.5 A10 10 0 0 1 22.5 3.5 Z" fill="currentColor" />
+      </symbol>
+      <symbol id="icon-leaf" viewBox="0 0 32 32">
+        <path d="M16 3 Q27 12 16 29 Q5 12 16 3 Z" fill="currentColor" />
+      </symbol>
+      <symbol id="icon-stone" viewBox="0 0 32 32">
+        <polygon points="16,3 27,9.5 27,22.5 16,29 5,22.5 5,9.5" fill="currentColor" />
+      </symbol>
+      <symbol id="icon-lantern" viewBox="0 0 32 32">
+        <path d="M16 3 L19.2 12.8 L29 16 L19.2 19.2 L16 29 L12.8 19.2 L3 16 L12.8 12.8 Z" fill="currentColor" />
+      </symbol>
+    </defs>
+  </svg>
 
   <div class="screen" id="screen-title">
     <div class="lantern-row">
@@ -27,11 +52,11 @@
       First to <b>50 points</b> wins the duel.
     </div>
     <div class="suit-key">
-      <span><span style="color:#f5b301">&#9788;</span> Sun</span>
-      <span><span style="color:#9b7ede">&#9789;</span> Moon</span>
-      <span><span style="color:#3fae5a">&#9670;</span> Leaf</span>
-      <span><span style="color:#9aa3ad">&#11022;</span> Stone</span>
-      <span><span style="color:#f5b301">&#10022;</span> Lantern — wild</span>
+      <span style="color:#f5b301"><svg class="suit-icon"><use href="#icon-sun" /></svg> Sun</span>
+      <span style="color:#9b7ede"><svg class="suit-icon"><use href="#icon-moon" /></svg> Moon</span>
+      <span style="color:#3fae5a"><svg class="suit-icon"><use href="#icon-leaf" /></svg> Leaf</span>
+      <span style="color:#9aa3ad"><svg class="suit-icon"><use href="#icon-stone" /></svg> Stone</span>
+      <span style="color:#f5b301"><svg class="suit-icon"><use href="#icon-lantern" /></svg> Lantern — wild</span>
     </div>
     <button class="btn" id="play-button">LIGHT THE LANTERNS — PLAY</button>
     <p class="hint" style="margin-top:18px">Click a card to select it, click again to play. Keys 1–7 select, Enter plays, R restarts, M mutes.</p>
@@ -62,6 +87,7 @@
 
     <div class="table" id="table-area">
       <div class="felt-label">THE LANTERN TABLE — FIRST TO 50</div>
+      <div class="table-vs">VS</div>
       <div class="table-slot" id="slot-opp"></div>
       <div class="table-slot" id="slot-player"></div>
       <div class="trick-log" id="trick-log"></div>
@@ -81,7 +107,14 @@
   </div>
 
   <div class="screen" id="screen-end">
-    <div class="fireworks" id="fireworks"><span>&#10022;</span><span>&#9788;</span><span>&#10022;</span><span>&#9789;</span></div>
+    <div class="win-burst"></div>
+    <div class="end-lanterns">
+      <div class="lantern sun"></div>
+      <div class="lantern moon"></div>
+      <div class="lantern leaf"></div>
+      <div class="lantern stone"></div>
+    </div>
+    <div class="fireworks" id="fireworks"><span style="color:#f5b301"><svg class="suit-icon"><use href="#icon-lantern" /></svg></span><span style="color:#f5b301"><svg class="suit-icon"><use href="#icon-sun" /></svg></span><span style="color:#f5b301"><svg class="suit-icon"><use href="#icon-lantern" /></svg></span><span style="color:#9b7ede"><svg class="suit-icon"><use href="#icon-moon" /></svg></span></div>
     <h1 id="end-title" class="win">YOU WIN THE DUEL</h1>
     <p id="end-sub"></p>
     <p id="end-score"></p>

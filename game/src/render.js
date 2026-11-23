@@ -9,10 +9,11 @@
     return node;
   }
 
-  function suitGlyph(suitId) {
-    if (suitId === "lantern") return "\u2726";
-    var suit = root.LumenDeck.suitById(suitId);
-    return suit ? suit.glyph : "?";
+  // One inline SVG suit icon (crisp vector shape, never a text glyph).
+  function suitIcon(suitId) {
+    var id = suitId === "lantern" ? "lantern" : suitId;
+    return '<svg class="suit-icon" viewBox="0 0 32 32" aria-hidden="true">' +
+      '<use href="#icon-' + id + '"></use></svg>';
   }
 
   function suitName(suitId) {
@@ -27,7 +28,8 @@
     var node = el("div", "card");
     if (opts.faceDown) {
       node.classList.add("back");
-      var mark = el("div", "back-mark", "\u2726");
+      var mark = el("div", "back-mark");
+      mark.innerHTML = suitIcon("lantern");
       node.appendChild(mark);
       return node;
     }
@@ -37,13 +39,19 @@
     if (opts.played) node.classList.add("played");
     var top = el("div", "corner");
     top.appendChild(el("span", "v", String(card.value)));
-    top.appendChild(el("span", "s", suitGlyph(card.suit)));
+    var topSuit = el("span", "s");
+    topSuit.innerHTML = suitIcon(card.suit);
+    top.appendChild(topSuit);
     var bottom = el("div", "corner br");
     bottom.appendChild(el("span", "v", String(card.value)));
-    bottom.appendChild(el("span", "s", suitGlyph(card.suit)));
+    var bottomSuit = el("span", "s");
+    bottomSuit.innerHTML = suitIcon(card.suit);
+    bottom.appendChild(bottomSuit);
     var center = el("div", "center");
     center.appendChild(el("div", "big", String(card.value)));
-    center.appendChild(el("div", "glyph", suitGlyph(card.suit)));
+    var centerIcon = el("div", "glyph");
+    centerIcon.innerHTML = suitIcon(card.suit);
+    center.appendChild(centerIcon);
     node.appendChild(top);
     node.appendChild(center);
     node.appendChild(bottom);
@@ -88,6 +96,8 @@
     table.querySelectorAll(".chain-banner").forEach(function (n) { n.remove(); });
     var playerSlot = document.getElementById("slot-player");
     var oppSlot = document.getElementById("slot-opp");
+    var playerCardEl = null;
+    var oppCardEl = null;
     playerSlot.innerHTML = "";
     oppSlot.innerHTML = "";
     var labelP = el("div", "slot-label", "YOUR CARD");
@@ -95,14 +105,24 @@
     playerSlot.appendChild(labelP);
     oppSlot.appendChild(labelO);
     if (state.table.playerCard) {
-      playerSlot.appendChild(cardElement(state.table.playerCard, { played: true }));
+      playerCardEl = cardElement(state.table.playerCard, { played: true });
+      playerSlot.appendChild(playerCardEl);
     } else {
       playerSlot.appendChild(el("div", "slot-empty", "waiting…"));
     }
     if (state.table.opponentCard) {
-      oppSlot.appendChild(cardElement(state.table.opponentCard, { played: true }));
+      oppCardEl = cardElement(state.table.opponentCard, { played: true });
+      oppSlot.appendChild(oppCardEl);
     } else {
       oppSlot.appendChild(el("div", "slot-empty", "waiting…"));
+    }
+    // Gold glow ring on the card that took the trick, plus a compact
+    // score badge (+points) on that card, mirroring the trick result.
+    if (playerCardEl && oppCardEl && state.lastResult) {
+      var winCardEl = state.lastResult.winnerIsPlayer ? playerCardEl : oppCardEl;
+      winCardEl.classList.add("winner");
+      var badge = el("div", "score-badge", "+" + state.lastResult.points);
+      winCardEl.appendChild(badge);
     }
     if (state.lastResult && state.lastResult.chained && state.showChain) {
       var banner = el("div", "chain-banner",
@@ -114,7 +134,7 @@
     var fav = root.LumenAi.favouredSuit(state.opponentHand);
     var favName = suitName(fav);
     document.getElementById("opp-fav").innerHTML =
-      "Favours <b>" + favName + "</b> " + suitGlyph(fav) +
+      "Favours <b>" + favName + "</b> " + suitIcon(fav) +
       " — " + root.LumenAi.telegraph(state.opponentHand, state.playerLeads === false);
     renderScoreboard(state);
     renderHand(document.getElementById("opp-hand"), state.opponentHand, { faceDown: true });
@@ -136,6 +156,9 @@
     var score = document.getElementById("end-score");
     var detail = document.getElementById("end-detail");
     var fireworks = document.getElementById("fireworks");
+    var endScreen = document.getElementById("screen-end");
+    endScreen.classList.toggle("win-mode", winner === "player");
+    endScreen.classList.toggle("loss-mode", winner !== "player");
     if (winner === "player") {
       title.textContent = "YOU WIN THE DUEL";
       title.className = "win";
@@ -164,7 +187,7 @@
     renderTable: renderTable,
     renderEnd: renderEnd,
     showScreen: showScreen,
-    suitGlyph: suitGlyph,
+    suitIcon: suitIcon,
     suitName: suitName
   };
 })(typeof window !== "undefined" ? window : globalThis);

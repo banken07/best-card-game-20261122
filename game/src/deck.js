@@ -3,10 +3,10 @@
   "use strict";
 
   var SUITS = [
-    { id: "sun",   name: "Sun",   color: "#b8860b", glyph: "\u2600" },
-    { id: "moon",  name: "Moon",  color: "#5b4398", glyph: "\u263E" },
-    { id: "leaf",  name: "Leaf",  color: "#20703a", glyph: "\u25C6" },
-    { id: "stone", name: "Stone", color: "#5a6470", glyph: "\u2B22" }
+    { id: "sun",   name: "Sun",   color: "#b8860b" },
+    { id: "moon",  name: "Moon",  color: "#5b4398" },
+    { id: "leaf",  name: "Leaf",  color: "#20703a" },
+    { id: "stone", name: "Stone", color: "#5a6470" }
   ];
 
   function suitById(id) {
