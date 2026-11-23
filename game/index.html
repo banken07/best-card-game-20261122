@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lumen Duel — a lantern-light card duel</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<div id="app">
+
+  <div class="screen" id="screen-title">
+    <div class="lantern-row">
+      <div class="lantern sun"></div>
+      <div class="lantern moon"></div>
+      <div class="lantern leaf"></div>
+      <div class="lantern stone"></div>
+    </div>
+    <h1 class="title">LUMEN DUEL</h1>
+    <p class="subtitle">A LANTERN-LIGHT CARD DUEL AGAINST MIRA</p>
+    <div class="rules-box">
+      <b>How to play:</b> You and Mira take turns playing cards.<br>
+      Higher card takes the trick and scores both cards.<br>
+      <b>Chain:</b> answer the lead suit and score <b>+5</b> extra.<br>
+      <b>Lantern cards</b> are wild — they match any suit.<br>
+      First to <b>50 points</b> wins the duel.
+    </div>
+    <div class="suit-key">
+      <span><span style="color:#f5b301">&#9788;</span> Sun</span>
+      <span><span style="color:#9b7ede">&#9789;</span> Moon</span>
+      <span><span style="color:#3fae5a">&#9670;</span> Leaf</span>
+      <span><span style="color:#9aa3ad">&#11022;</span> Stone</span>
+      <span><span style="color:#f5b301">&#10022;</span> Lantern — wild</span>
+    </div>
+    <button class="btn" id="play-button">LIGHT THE LANTERNS — PLAY</button>
+    <p class="hint" style="margin-top:18px">Click a card to select it, click again to play. Keys 1–7 select, Enter plays, R restarts, M mutes.</p>
+  </div>
+
+  <div class="screen" id="screen-play">
+    <div class="topbar">
+      <div class="brand">LUMEN DUEL</div>
+      <div class="scoreboard">
+        <div class="score-box" id="score-player"><div class="who">YOU</div><div class="num">0 <small>/ 50</small></div></div>
+        <div class="vs">VS</div>
+        <div class="score-box" id="score-opp"><div class="who">MIRA</div><div class="num">0 <small>/ 50</small></div></div>
+      </div>
+      <div class="deck-info">
+        <div id="deck-count">Deck: 29 cards</div>
+        <div id="trick-count">Trick 1</div>
+        <button class="btn small" id="mute-button"><span id="mute-label">Sound: on (M)</span></button>
+      </div>
+    </div>
+
+    <div class="opp-row">
+      <div class="opp-tag">
+        <div class="name">Mira, Lantern-Keeper</div>
+        <div class="fav" id="opp-fav"></div>
+      </div>
+      <div class="hand opp" id="opp-hand"></div>
+    </div>
+
+    <div class="table" id="table-area">
+      <div class="felt-label">THE LANTERN TABLE — FIRST TO 50</div>
+      <div class="table-slot" id="slot-opp"></div>
+      <div class="table-slot" id="slot-player"></div>
+      <div class="trick-log" id="trick-log"></div>
+    </div>
+
+    <div class="player-row">
+      <div class="player-tag">
+        <div class="name">You</div>
+        <div class="keys">Click a card to select, click again to play.<br>Keys 1–7 select · Enter plays · R restarts</div>
+      </div>
+      <div class="hand" id="player-hand"></div>
+      <div class="player-controls">
+        <button class="btn small" id="restart-button">Restart (R)</button>
+      </div>
+    </div>
+    <div id="turn-banner"></div>
+  </div>
+
+  <div class="screen" id="screen-end">
+    <div class="fireworks" id="fireworks"><span>&#10022;</span><span>&#9788;</span><span>&#10022;</span><span>&#9789;</span></div>
+    <h1 id="end-title" class="win">YOU WIN THE DUEL</h1>
+    <p id="end-sub"></p>
+    <p id="end-score"></p>
+    <p id="end-detail"></p>
+    <div class="end-buttons">
+      <button class="btn" id="play-again-button">PLAY AGAIN</button>
+    </div>
+    <p class="hint" style="margin-top:18px">Press Enter or R to play again.</p>
+  </div>
+
+</div>
+<script src="src/deck.js"></script>
+<script src="src/rules.js"></script>
+<script src="src/ai.js"></script>
+<script src="src/render.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
